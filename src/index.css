@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+svg {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+button {
+  width: max-content;
+  margin: 16px 16px 16px 0;
+}
+
+.form-group {
+  width: 50%;
+  min-width: 200px;
+}
+
+.App {
+  max-width: 800px;
+  margin: auto;
+}
