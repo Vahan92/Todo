@@ -28,24 +28,32 @@ class Input extends Component {
 
   submit = (e) => {
     e.preventDefault();
-    this.props.addTodo(this.state.todo);
-    this.setState({
-      todo: "",
-    });
+    if (this.state.todo.trim() < 1) {
+      alert("empty value is not allowed");
+    } else {
+      this.props.addTodo(this.state.todo);
+      this.setState({
+        todo: "",
+      });
+    }
   };
 
   confirmEdit = (index, todo) => {
-    this.props.confirmEdit(index, todo);
-    this.setState({
-      todo: "",
-    });
+    if (this.state.todo.trim() < 1) {
+      alert("empty value is not allowed");
+    } else {
+      this.props.confirmEdit(index, todo);
+      this.setState({
+        todo: "",
+      });
+    }
   };
 
   render() {
     return (
       <Wrapper>
         <Form onSubmit={this.submit}>
-          <Button variant="outline-primary"type="submit">
+          <Button variant="outline-primary" type="submit">
             Add Todo
           </Button>
           <Form.Group controlId="formBasicName">
@@ -64,7 +72,8 @@ class Input extends Component {
             </Button>
           )}
           {this.state.todo !== this.props.editTodo.todo &&
-            Object.keys(this.props.editTodo).length > 0 && (
+            Object.keys(this.props.editTodo).length > 0 &&
+            this.state.todo.length > 0 && (
               <Button
                 variant="outline-success"
                 onClick={() => {
