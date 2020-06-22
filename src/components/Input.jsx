@@ -12,6 +12,7 @@ import styled from "styled-components";
 class Input extends Component {
   state = {
     todo: "",
+    notAllowed: false,
   };
 
   componentDidUpdate(prevProps) {
@@ -24,14 +25,19 @@ class Input extends Component {
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+    this.setState({
+      notAllowed: false,
+    });
   };
 
   submit = (e) => {
     e.preventDefault();
     if (this.state.todo.trim() < 1) {
-      alert("empty value is not allowed");
+      this.setState({
+        notAllowed: true,
+      });
     } else {
-      this.props.addTodo(this.state.todo);
+      this.props.addTodo(this.state.todo.trim());
       this.setState({
         todo: "",
       });
@@ -40,9 +46,11 @@ class Input extends Component {
 
   confirmEdit = (index, todo) => {
     if (this.state.todo.trim() < 1) {
-      alert("empty value is not allowed");
+      this.setState({
+        notAllowed: true,
+      });
     } else {
-      this.props.confirmEdit(index, todo);
+      this.props.confirmEdit(index, todo.trim());
       this.setState({
         todo: "",
       });
@@ -65,6 +73,7 @@ class Input extends Component {
               placeholder="Enter todo"
               value={this.state.todo || ""}
             />
+            {this.state.notAllowed && <p>Please fill in this field</p>}
           </Form.Group>
           {Object.keys(this.props.lastDeleted).length > 0 && (
             <Button variant="outline-primary" onClick={this.props.undo}>
@@ -112,6 +121,10 @@ const Wrapper = styled.div`
   display: flex;
   text-align: left;
   flex-direction: column;
+  p {
+    color: red;
+    margin-top: 16px;
+  }
 `;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Input);
